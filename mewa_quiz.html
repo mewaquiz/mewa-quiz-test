@@ -16,7 +16,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -30,24 +29,18 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 5vw;
-    background: rgba(254,249,225,0.85);
-    backdrop-filter: blur(12px);
+    padding: .8rem 5vw;
+    background: rgba(254,249,225,0.88);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--dun);
   }
 
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--mahogany);
-    letter-spacing: -1px;
-  }
-  .nav-logo span { color: var(--orange-peel); }
+  .nav-logo img { height: 42px; display: block; }
 
   nav a {
     text-decoration: none;
     color: var(--mahogany);
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
     opacity: 0.75;
@@ -55,13 +48,13 @@
   }
   nav a:hover { opacity: 1; }
 
-  .nav-links { display: flex; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
 
   .btn-cta-nav {
-    background: var(--mahogany);
+    background: var(--mahogany) !important;
     color: #fff !important;
     opacity: 1 !important;
-    padding: .55rem 1.3rem;
+    padding: .5rem 1.3rem;
     border-radius: 999px;
     font-size: 0.85rem !important;
     transition: background .2s !important;
@@ -75,12 +68,11 @@
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 4rem;
-    padding: 8rem 8vw 5rem;
+    padding: 7rem 8vw 5rem;
     position: relative;
     overflow: hidden;
   }
 
-  /* background blobs */
   .hero::before {
     content: '';
     position: absolute;
@@ -108,6 +100,7 @@
     display: inline-block;
     background: var(--peach);
     color: var(--mahogany);
+    font-family: 'DM Sans', sans-serif;
     font-size: .78rem;
     font-weight: 500;
     letter-spacing: .12em;
@@ -125,12 +118,10 @@
     color: var(--mahogany);
     margin-bottom: 1rem;
   }
-  .hero-title em {
-    font-style: normal;
-    color: var(--orange-peel);
-  }
+  .hero-title em { font-style: normal; color: var(--orange-peel); }
 
   .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
     font-size: 1.1rem;
     font-weight: 300;
     line-height: 1.7;
@@ -144,6 +135,7 @@
     background: var(--mahogany);
     color: #fff;
     text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-size: 1rem;
     padding: .9rem 2rem;
@@ -156,33 +148,98 @@
   .hero-badge {
     display: inline-flex; align-items: center; gap: .5rem;
     margin-left: 1rem;
+    font-family: 'DM Sans', sans-serif;
     font-size: .85rem;
     color: #8a6040;
   }
 
-  /* phone mockup */
-  .hero-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
-
-  .phone-stack {
-    position: relative;
-    width: 260px;
-    height: 520px;
+  /* ── CAROUSEL ── */
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
   }
 
-  .phone-card {
+  .carousel-wrapper {
+    position: relative;
+    width: 280px;
+    height: 510px;
+  }
+
+  .carousel-slide {
     position: absolute;
     width: 240px;
+    left: 50%; 
     background: #fff;
     border-radius: 32px;
     overflow: hidden;
     box-shadow: 0 24px 60px rgba(0,0,0,.15);
+    transition: all .5s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
   }
-  .phone-card img { width: 100%; display: block; }
-  .phone-card:nth-child(1) { top: 0; left: 0; transform: rotate(-6deg); z-index: 1; }
-  .phone-card:nth-child(2) { top: 40px; left: 20px; transform: rotate(2deg); z-index: 2; }
-  .phone-card:nth-child(3) { top: 20px; left: 10px; transform: rotate(-1deg); z-index: 3; box-shadow: 0 32px 80px rgba(0,0,0,.2); }
+  .carousel-slide img { width: 100%; display: block; }
 
-  /* ── WORD MARK ── */
+  .carousel-slide.active {
+    top: 0; z-index: 3;
+    opacity: 1;
+    transform: translateX(-50%) scale(1) rotate(0deg);
+    box-shadow: 0 32px 80px rgba(0,0,0,.22);
+    cursor: default;
+  }
+  .carousel-slide.prev {
+    top: 30px; z-index: 2;
+    opacity: .65;
+    transform: translateX(calc(-50% - 28px)) scale(0.91) rotate(-5deg);
+  }
+  .carousel-slide.next {
+    top: 30px; z-index: 2;
+    opacity: .65;
+    transform: translateX(calc(-50% + 28px)) scale(0.91) rotate(5deg);
+  }
+  .carousel-slide.hidden {
+    top: 60px; z-index: 1;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.84);
+    pointer-events: none;
+  }
+
+  .carousel-caption {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    color: #8a6040;
+    font-weight: 500;
+    text-align: center;
+    min-height: 1.2em;
+    transition: opacity .25s;
+  }
+
+  .carousel-dots { display: flex; gap: .6rem; justify-content: center; }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--dun);
+    border: none; cursor: pointer;
+    transition: all .3s; padding: 0;
+  }
+  .dot.active { background: var(--mahogany); width: 24px; }
+
+  .carousel-arrows { display: flex; gap: 1rem; }
+
+  .arrow-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--dun);
+    background: #fff;
+    color: var(--mahogany);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .arrow-btn:hover { background: var(--mahogany); color: #fff; border-color: var(--mahogany); }
+
+  /* ── WORDMARK ── */
   .wordmark {
     text-align: center;
     padding: 5rem 5vw;
@@ -195,28 +252,22 @@
     content: 'MEWA';
     position: absolute;
     font-family: 'Playfair Display', serif;
-    font-size: 22vw;
-    font-weight: 900;
+    font-size: 22vw; font-weight: 900;
     color: rgba(255,255,255,0.04);
     top: 50%; left: 50%;
     transform: translate(-50%,-50%);
-    white-space: nowrap;
-    pointer-events: none;
+    white-space: nowrap; pointer-events: none;
   }
   .wordmark-quote {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-    font-weight: 700;
-    font-style: italic;
-    line-height: 1.4;
-    max-width: 700px;
-    margin: 0 auto 1rem;
-    position: relative;
-    z-index: 1;
+    font-weight: 700; font-style: italic; line-height: 1.4;
+    max-width: 700px; margin: 0 auto 1rem;
+    position: relative; z-index: 1;
   }
   .wordmark-sub {
-    font-size: .9rem;
-    opacity: .65;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem; opacity: .65;
     position: relative; z-index: 1;
   }
 
@@ -224,230 +275,112 @@
   section { padding: 6rem 8vw; }
 
   .section-label {
-    font-size: .75rem;
-    font-weight: 500;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--orange-peel);
-    margin-bottom: .8rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .75rem; font-weight: 500;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--orange-peel); margin-bottom: .8rem;
   }
 
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: 900;
-    color: var(--mahogany);
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 900;
+    color: var(--mahogany); line-height: 1.15; margin-bottom: 1.5rem;
   }
 
-  /* ── WHY ── */
+  /* WHY */
   .why { background: var(--cornsilk); }
-
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .why-cards {
-    display: grid;
-    gap: 1.2rem;
-  }
-
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .why-cards { display: grid; gap: 1.2rem; }
   .why-card {
-    background: #fff;
-    border-radius: 20px;
+    background: #fff; border-radius: 20px;
     padding: 1.5rem 1.8rem;
     border-left: 4px solid var(--orange-peel);
     box-shadow: 0 4px 20px rgba(0,0,0,.06);
   }
+  .why-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--mahogany); margin-bottom: .4rem; }
+  .why-card p { font-family: 'DM Sans', sans-serif; font-size: .9rem; line-height: 1.6; color: #6a4a2a; font-weight: 300; }
+  .why-text p { font-family: 'DM Sans', sans-serif; font-size: 1.05rem; line-height: 1.8; color: #5a3a1a; font-weight: 300; margin-bottom: 1rem; }
 
-  .why-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: var(--mahogany);
-    margin-bottom: .4rem;
-  }
-
-  .why-card p {
-    font-size: .9rem;
-    line-height: 1.6;
-    color: #6a4a2a;
-    font-weight: 300;
-  }
-
-  .why-text p {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: #5a3a1a;
-    font-weight: 300;
-    margin-bottom: 1rem;
-  }
-
-  /* ── LOGO SECTION ── */
-  .logo-section {
-    background: var(--dun);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
+  /* LOGO */
+  .logo-section { background: var(--dun); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
   .logo-display {
     display: flex; justify-content: center; align-items: center;
-    background: var(--cornsilk);
-    border-radius: 32px;
-    padding: 3rem;
+    background: var(--cornsilk); border-radius: 32px; padding: 3rem;
     box-shadow: 0 16px 50px rgba(0,0,0,.08);
   }
-
   .logo-display img { max-width: 240px; }
 
-  /* ── SCREENSHOTS ── */
+  /* SCREENSHOTS */
   .screenshots { background: var(--cornsilk); }
-
-  .screens-title-row {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    margin-bottom: 3rem;
-  }
-
-  .screens-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-  }
-
+  .screens-title-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem; }
+  .screens-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
   .screen-item {
-    background: #fff;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,.1);
-    transition: transform .25s;
+    background: #fff; border-radius: 24px; overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,.1); transition: transform .25s;
   }
   .screen-item:hover { transform: translateY(-6px); }
+  .screen-item img { width: 100%; display: block; }
+  .screen-caption { font-family: 'DM Sans', sans-serif; padding: .8rem 1rem; font-size: .78rem; font-weight: 500; color: #8a6040; border-top: 1px solid #f0e8dc; }
 
-  .screen-item img {
-    width: 100%;
-    display: block;
-  }
-
-  .screen-caption {
-    padding: .8rem 1rem;
-    font-size: .78rem;
-    font-weight: 500;
-    color: #8a6040;
-    border-top: 1px solid #f0e8dc;
-  }
-
-  /* ── STORY ── */
+  /* STORY */
   .story { background: var(--mahogany); color: var(--cornsilk); }
-
   .story .section-label { color: var(--peach); }
   .story .section-title { color: var(--cornsilk); }
+  .story-body { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .story p { font-family: 'DM Sans', sans-serif; font-size: 1.05rem; line-height: 1.8; font-weight: 300; opacity: .9; }
+  .story-values { display: grid; gap: 1.2rem; }
+  .value-item { display: flex; gap: 1.2rem; align-items: flex-start; background: rgba(255,255,255,.07); border-radius: 16px; padding: 1.2rem 1.4rem; }
+  .value-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+  .value-item h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: .3rem; color: var(--peach); }
+  .value-item p { font-family: 'DM Sans', sans-serif; font-size: .88rem; opacity: .75; }
 
-  .story-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .story p {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    font-weight: 300;
-    opacity: .9;
-  }
-
-  .story-values {
-    display: grid; gap: 1.2rem;
-  }
-
-  .value-item {
-    display: flex; gap: 1.2rem; align-items: flex-start;
-    background: rgba(255,255,255,.07);
-    border-radius: 16px;
-    padding: 1.2rem 1.4rem;
-  }
-
-  .value-icon {
-    font-size: 1.6rem;
-    flex-shrink: 0;
-    margin-top: .1rem;
-  }
-
-  .value-item h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    margin-bottom: .3rem;
-    color: var(--peach);
-  }
-
-  .value-item p {
-    font-size: .88rem;
-    opacity: .75;
-  }
-
-  /* ── CTA BOTTOM ── */
-  .cta-bottom {
-    background: var(--orange-peel);
-    text-align: center;
-    padding: 6rem 5vw;
-  }
-
-  .cta-bottom h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 900;
-    color: var(--mahogany);
-    margin-bottom: 1rem;
-  }
-
-  .cta-bottom p {
-    font-size: 1.1rem;
-    color: var(--mahogany);
-    opacity: .8;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-  }
-
+  /* CTA */
+  .cta-bottom { background: var(--orange-peel); text-align: center; padding: 6rem 5vw; }
+  .cta-bottom h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; color: var(--mahogany); margin-bottom: 1rem; }
+  .cta-bottom p { font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: var(--mahogany); opacity: .8; margin-bottom: 2.5rem; font-weight: 300; }
   .btn-store {
     display: inline-flex; align-items: center; gap: .7rem;
-    background: var(--mahogany);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    padding: 1rem 2.2rem;
-    border-radius: 999px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.2);
-    transition: transform .2s, box-shadow .2s;
+    background: var(--mahogany); color: #fff; text-decoration: none;
+    font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 1rem;
+    padding: 1rem 2.2rem; border-radius: 999px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.2); transition: transform .2s, box-shadow .2s;
   }
   .btn-store:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,.3); }
-
   .btn-store svg { width: 22px; height: 22px; fill: #fff; }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--dark);
-    color: var(--dun);
-    text-align: center;
-    padding: 2rem 5vw;
-    font-size: .82rem;
-    opacity: .9;
-  }
+  /* FOOTER */
+  footer { background: var(--dark); color: var(--dun); text-align: center; padding: 2rem 5vw; font-family: 'DM Sans', sans-serif; font-size: .82rem; }
   footer span { color: var(--orange-peel); }
 
-  /* ── RESPONSIVE ── */
+  /* BACK TO TOP */
+  .back-to-top {
+    display: none;
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+    width: 48px; height: 48px;
+    background: var(--mahogany); color: #fff;
+    border: none; border-radius: 50%;
+    font-size: 1.3rem; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(193,70,0,.35);
+    align-items: center; justify-content: center;
+    transition: background .2s, opacity .3s, transform .3s;
+    opacity: 0; pointer-events: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; }
+  .back-to-top:hover { background: var(--orange-peel); transform: translateY(-2px); }
+
+  /* RESPONSIVE */
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 7rem; }
+    .back-to-top { display: flex; }
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 7rem; gap: 2.5rem; }
     .hero-subtitle { max-width: 100%; }
-    .hero-visual { display: none; }
+    .hero-badge { margin-left: 0; margin-top: .5rem; justify-content: center; }
+    .hero-actions { display: flex; flex-direction: column; align-items: center; gap: .8rem; }
     .why-grid, .logo-section, .story-body { grid-template-columns: 1fr; }
     .screens-grid { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
+    .carousel-wrapper { width: 240px; height: 450px; }
+    .carousel-slide { width: 200px; }
   }
 
   @media (max-width: 600px) {
@@ -455,25 +388,15 @@
     .screens-grid { grid-template-columns: 1fr; }
   }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-text > * {
-    animation: fadeUp .7s ease both;
-  }
-  .hero-eyebrow { animation-delay: .1s; }
-  .hero-title   { animation-delay: .2s; }
-  .hero-subtitle{ animation-delay: .35s; }
-  .hero-actions { animation-delay: .5s; }
-
-  .hero-visual { animation: fadeUp .9s .3s ease both; }
-
-  .screen-item {
-    animation: fadeUp .5s ease both;
-  }
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-text > * { animation: fadeUp .7s ease both; }
+  .hero-eyebrow  { animation-delay: .1s; }
+  .hero-title    { animation-delay: .2s; }
+  .hero-subtitle { animation-delay: .35s; }
+  .hero-actions  { animation-delay: .5s; }
+  .hero-visual   { animation: fadeUp .9s .3s ease both; }
+  .screen-item   { animation: fadeUp .5s ease both; }
   .screen-item:nth-child(1) { animation-delay: .05s; }
   .screen-item:nth-child(2) { animation-delay: .15s; }
   .screen-item:nth-child(3) { animation-delay: .25s; }
@@ -482,9 +405,14 @@
 </head>
 <body>
 
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">mewa <span>quiz</span></div>
+  <a href="#" class="nav-logo">
+    <img src="logo_lungo.png" alt="Mewa Quiz">
+  </a>
   <div class="nav-links">
     <a href="#perche">Perché MEWA</a>
     <a href="#storia">La nostra storia</a>
@@ -504,7 +432,9 @@
     </p>
     <div class="hero-actions">
       <a href="#download" class="hero-cta">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.39.07 2.35.82 3.16.82.81 0 2.33-1.01 3.93-.86 1.67.13 2.91.9 3.73 2.27-3.32 2.04-2.77 6.53.43 7.85-.56 1.3-1.27 2.57-3.25 4.78zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zm-2.5-1C2.67 17 2 17.67 2 18.5v-9C2 8.67 2.67 8 3.5 8S5 8.67 5 9.5v9c0 .83-.67 1.5-1.5 1.5zm17 0c-.83 0-1.5-.67-1.5-1.5v-9c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5zM15.53 2.16l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0 0 12 1c-.66 0-1.3.12-1.89.33L8.63.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.944 5.944 0 0 0 6 7h12c0-2.02-1.01-3.8-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/>
+        </svg>
         Scarica su Android
       </a>
       <span class="hero-badge">🆓 Gratis · Poca pubblicità</span>
@@ -512,16 +442,22 @@
   </div>
 
   <div class="hero-visual">
-    <div class="phone-stack">
-      <div class="phone-card">
-        <img src="4.png" alt="Screenshot home">
-      </div>
-      <div class="phone-card">
-        <img src="2.png" alt="Screenshot quiz">
-      </div>
-      <div class="phone-card">
-        <img src="1.png" alt="Screenshot quiz">
-      </div>
+    <div class="carousel-wrapper" id="carousel">
+      <div class="carousel-slide active" data-index="0"><img src="4.png" alt="Home screen"></div>
+      <div class="carousel-slide next"   data-index="1"><img src="1.png" alt="Quiz screen"></div>
+      <div class="carousel-slide hidden" data-index="2"><img src="3.png" alt="Statistiche"></div>
+      <div class="carousel-slide hidden" data-index="3"><img src="2.png" alt="Quiz Champions"></div>
+    </div>
+    <div class="carousel-caption" id="carouselCaption">Home · Ricompense giornaliere</div>
+    <div class="carousel-dots" id="carouselDots">
+      <button class="dot active" onclick="goTo(0)"></button>
+      <button class="dot" onclick="goTo(1)"></button>
+      <button class="dot" onclick="goTo(2)"></button>
+      <button class="dot" onclick="goTo(3)"></button>
+    </div>
+    <div class="carousel-arrows">
+      <button class="arrow-btn" onclick="prevSlide()">←</button>
+      <button class="arrow-btn" onclick="nextSlide()">→</button>
     </div>
   </div>
 </section>
@@ -542,22 +478,10 @@
       <p>Il design pulito e i colori caldi creano la giusta atmosfera per una pausa "relax & quiz" tra un impegno e l'altro.</p>
     </div>
     <div class="why-cards">
-      <div class="why-card">
-        <h3>😌 Relax &amp; Divertimento</h3>
-        <p>Perfetto per staccare la spina in qualsiasi momento. Zero stress, puro godimento.</p>
-      </div>
-      <div class="why-card">
-        <h3>📚 Impara qualcosa di nuovo</h3>
-        <p>Unisci il gioco più bello del mondo con curiosità e record del calcio italiano.</p>
-      </div>
-      <div class="why-card">
-        <h3>💛 Poca pubblicità</h3>
-        <p>Abbiamo ridotto al minimo gli annunci. L'esperienza viene prima di tutto.</p>
-      </div>
-      <div class="why-card">
-        <h3>⚽ Solo Serie A</h3>
-        <p>Focus totale sul campionato italiano, con tutte le sue storie e i suoi protagonisti.</p>
-      </div>
+      <div class="why-card"><h3>😌 Relax &amp; Divertimento</h3><p>Perfetto per staccare la spina in qualsiasi momento. Zero stress, puro godimento.</p></div>
+      <div class="why-card"><h3>📚 Impara qualcosa di nuovo</h3><p>Unisci il gioco più bello del mondo con curiosità e record del calcio italiano.</p></div>
+      <div class="why-card"><h3>💛 Poca pubblicità</h3><p>Abbiamo ridotto al minimo gli annunci. L'esperienza viene prima di tutto.</p></div>
+      <div class="why-card"><h3>⚽ Solo Serie A</h3><p>Focus totale sul campionato italiano, con tutte le sue storie e i suoi protagonisti.</p></div>
     </div>
   </div>
 </section>
@@ -567,7 +491,7 @@
   <div>
     <p class="section-label">Il nostro logo</p>
     <h2 class="section-title">Sapere e passione che si incontrano.</h2>
-    <p style="font-size:1.05rem;line-height:1.8;color:#5a3a1a;font-weight:300;">
+    <p style="font-family:'DM Sans',sans-serif;font-size:1.05rem;line-height:1.8;color:#5a3a1a;font-weight:300;">
       Un cappello da laurea che poggia su un pallone da calcio: simbolo di conoscenza e passione che si uniscono in un gioco che è allo stesso tempo il migliore del mondo e un modo per imparare sempre qualcosa di nuovo.
     </p>
   </div>
@@ -585,22 +509,10 @@
     </div>
   </div>
   <div class="screens-grid">
-    <div class="screen-item">
-      <img src="4.png" alt="Home screen">
-      <div class="screen-caption">Home · Ricompense giornaliere</div>
-    </div>
-    <div class="screen-item">
-      <img src="1.png" alt="Quiz screen">
-      <div class="screen-caption">Quiz · 10 risposte da trovare</div>
-    </div>
-    <div class="screen-item">
-      <img src="3.png" alt="Statistiche">
-      <div class="screen-caption">Statistiche · Tieni traccia dei tuoi progressi</div>
-    </div>
-    <div class="screen-item">
-      <img src="2.png" alt="Quiz champions">
-      <div class="screen-caption">Quiz · Champions, Serie A e non solo</div>
-    </div>
+    <div class="screen-item"><img src="4.png" alt="Home screen"><div class="screen-caption">Home · Ricompense giornaliere</div></div>
+    <div class="screen-item"><img src="1.png" alt="Quiz screen"><div class="screen-caption">Quiz · 10 risposte da trovare</div></div>
+    <div class="screen-item"><img src="3.png" alt="Statistiche"><div class="screen-caption">Statistiche · Tieni traccia dei tuoi progressi</div></div>
+    <div class="screen-item"><img src="2.png" alt="Quiz champions"><div class="screen-caption">Quiz · Champions, Serie A e non solo</div></div>
   </div>
 </section>
 
@@ -615,27 +527,9 @@
       <p>Dal prototipo minimal fino alla versione stabile, l'obiettivo è sempre stato lo stesso: portare un'esperienza leggera e coinvolgente, senza fronzoli, celebrando la storia e i protagonisti della Serie A.</p>
     </div>
     <div class="story-values">
-      <div class="value-item">
-        <div class="value-icon">🎯</div>
-        <div>
-          <h4>Relax &amp; divertimento leggero</h4>
-          <p>Perfetto per staccare la spina in qualsiasi momento della giornata.</p>
-        </div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon">🧠</div>
-        <div>
-          <h4>Conoscenza</h4>
-          <p>Scopri curiosità e record del campionato italiano che non sapevi di non sapere.</p>
-        </div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon">💛</div>
-        <div>
-          <h4>Amore per il bel calcio</h4>
-          <p>Celebriamo la storia e i protagonisti della Serie A, senza fronzoli.</p>
-        </div>
-      </div>
+      <div class="value-item"><div class="value-icon">🎯</div><div><h4>Relax &amp; divertimento leggero</h4><p>Perfetto per staccare la spina in qualsiasi momento della giornata.</p></div></div>
+      <div class="value-item"><div class="value-icon">🧠</div><div><h4>Conoscenza</h4><p>Scopri curiosità e record del campionato italiano che non sapevi di non sapere.</p></div></div>
+      <div class="value-item"><div class="value-icon">💛</div><div><h4>Amore per il bel calcio</h4><p>Celebriamo la storia e i protagonisti della Serie A, senza fronzoli.</p></div></div>
     </div>
   </div>
 </section>
@@ -645,7 +539,9 @@
   <h2>Pronto a metterti alla prova?</h2>
   <p>Scarica MEWA Quiz gratis su Android e inizia subito.</p>
   <a href="https://play.google.com/store" class="btn-store">
-    <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.39.07 2.35.82 3.16.82.81 0 2.33-1.01 3.93-.86 1.67.13 2.91.9 3.73 2.27-3.32 2.04-2.77 6.53.43 7.85-.56 1.3-1.27 2.57-3.25 4.78zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zm-2.5-1C2.67 17 2 17.67 2 18.5v-9C2 8.67 2.67 8 3.5 8S5 8.67 5 9.5v9c0 .83-.67 1.5-1.5 1.5zm17 0c-.83 0-1.5-.67-1.5-1.5v-9c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5zM15.53 2.16l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0 0 12 1c-.66 0-1.3.12-1.89.33L8.63.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.944 5.944 0 0 0 6 7h12c0-2.02-1.01-3.8-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/>
+    </svg>
     Scarica su Google Play
   </a>
 </section>
@@ -655,5 +551,55 @@
   <p>© 2025 <span>MEWA Quiz</span> · Fatto con ⚽ e passione</p>
 </footer>
 
+<script>
+  // ── CAROUSEL ──
+  const captions = [
+    'Home · Ricompense giornaliere',
+    'Quiz · 10 risposte da trovare',
+    'Statistiche · Tieni traccia dei progressi',
+    'Quiz · Champions, Serie A e non solo'
+  ];
+  let current = 0;
+  const total = 4;
+
+  function getClass(i) {
+    const diff = (i - current + total) % total;
+    if (diff === 0) return 'active';
+    if (diff === 1) return 'next';
+    if (diff === total - 1) return 'prev';
+    return 'hidden';
+  }
+
+  function updateCarousel() {
+    document.querySelectorAll('.carousel-slide').forEach((el, i) => {
+      el.className = 'carousel-slide ' + getClass(i);
+    });
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+    const cap = document.getElementById('carouselCaption');
+    cap.style.opacity = '0';
+    setTimeout(() => { cap.textContent = captions[current]; cap.style.opacity = '1'; }, 200);
+  }
+
+  function nextSlide() { current = (current + 1) % total; updateCarousel(); }
+  function prevSlide() { current = (current - 1 + total) % total; updateCarousel(); }
+  function goTo(i)     { current = i; updateCarousel(); }
+
+  document.querySelectorAll('.carousel-slide').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('next')) nextSlide();
+      else if (el.classList.contains('prev')) prevSlide();
+    });
+  });
+
+  setInterval(nextSlide, 3500);
+
+  // ── BACK TO TOP ──
+  const btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
 </body>
 </html>
